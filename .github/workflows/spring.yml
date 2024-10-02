@@ -18,10 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: gwozdziuuu/openjdk-21-ubi9-build:latest
-      options: --user root
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Download repository as ZIP
+        run: curl -L -o repo.zip https://github.com/Gwozdziuuu/RiglightWatch/archive/refs/heads/main.zip
+      - name: Extract repository with jar
+        run: jar -xf repo.zip
+      - name: Move files to current directory
+        run: mv RiglightWatch-main/* .
       - name: Validate and download dependencies
         run: mvn validate -f spring/pom.xml
       - name: Run Tests
