@@ -40,7 +40,7 @@ jobs:
         run: mvn dependency:resolve -U -pl bifrost-beacon -am -DskipTests -Ddependency-check.skip=true -f spring/pom.xml
 
       - name: Run Unit Tests for Bifrost-Beacon
-        run: mvn test -o -pl bifrost-beacon -am -f spring/pom.xml
+        run: mvn test -pl bifrost-beacon -am -f spring/pom.xml
 
       - name: Package Bifrost-Beacon Application (without Tests)
         run: mvn clean package -o -pl bifrost-beacon -am -DskipTests -f spring/pom.xml
