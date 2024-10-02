@@ -1,2 +1,4 @@
 /.idea/
 /bin/
+/spring/target/
+/spring/bifrost-beacon/target/
