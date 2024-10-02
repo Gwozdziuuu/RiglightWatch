@@ -26,8 +26,8 @@ jobs:
         run: jar -xf repo.zip
       - name: Move files to current directory
         run: mv RiglightWatch-main/* .
-      - name: Validate and download dependencies
-        run: mvn validate -f spring/pom.xml
+      - name: Validate and download all dependencies (including test)
+        run: mvn test-compile -f spring/pom.xml
       - name: Run Tests
         run: mvn test -f spring/pom.xml
       - name: Build application
