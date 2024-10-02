@@ -20,42 +20,53 @@ jobs:
       image: gwozdziuuu/openjdk-21-ubi9-build:latest
       options: --user root
     steps:
-      - name: Download repository as ZIP
+      - name: Download Repository as ZIP
         run: curl -L -o repo.zip https://github.com/Gwozdziuuu/RiglightWatch/archive/refs/heads/main.zip
-      - name: Extract repository with jar
+
+      - name: Extract Repository ZIP with jar
         run: jar -xf repo.zip
-      - name: Move files to current directory
+
+      - name: Move Extracted Files to Working Directory
         run: mv RiglightWatch-main/* .
-      - name: Validate and download all dependencies (including test)
-        run: mvn test-compile -f spring/pom.xml
-      - name: Run Tests
-        run: mvn test -f spring/pom.xml
-      - name: Build application
-        run: mvn clean package -DskipTests -f spring/pom.xml
-      - name: Upload build artifact
+
+      - name: Resolve and Download Dependencies for Bifrost-Beacon
+        run: mvn dependency:resolve -U -pl bifrost-beacon -am -DskipTests -Ddependency-check.skip=true -f spring/pom.xml
+
+      - name: Run Unit Tests for Bifrost-Beacon
+        run: mvn test -pl bifrost-beacon -am -f spring/pom.xml
+
+      - name: Package Bifrost-Beacon Application (without Tests)
+        run: mvn clean package -pl bifrost-beacon -am -DskipTests -f spring/pom.xml
+
+      - name: Upload Bifrost-Beacon Build Artifact
         uses: actions/upload-artifact@v3
         with:
           name: bifrost-beacon-artifact
           path: spring/bifrost-beacon/target/bifrost-beacon-*.jar
+
   delivery:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Checkout code
+      - name: Checkout Code for Docker Deployment
         uses: actions/checkout@v4
-      - name: Download build artifact
+
+      - name: Download Bifrost-Beacon Build Artifact
         uses: actions/download-artifact@v3
         with:
           name: bifrost-beacon-artifact
-      - name: Rename artifact to service.jar
+
+      - name: Rename Build Artifact to service.jar
         run: mv bifrost-beacon-*.jar service.jar
-      - name: Build Docker image
+
+      - name: Build Docker Image for Bifrost-Beacon
         run: docker build -t bifrostbeacon:latest -f spring/bifrost-beacon/Dockerfile .
+
       - name: Log in to DockerHub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-      - name: Tag Docker image
-        run: |
-          docker tag bifrostbeacon:latest ${{ secrets.DOCKERHUB_USERNAME }}/bifrostbeacon:latest
-      - name: Push Docker image to DockerHub
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/bifrostbeacon:latest
+
+      - name: Tag Docker Image for DockerHub
+        run: docker tag bifrostbeacon:latest ${{ secrets.DOCKERHUB_USERNAME }}/bifrostbeacon:latest
+
+      - name: Push Docker Image to DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/bifrostbeacon:latest
