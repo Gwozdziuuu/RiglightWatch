@@ -23,13 +23,17 @@
         <maven.compiler.target>21</maven.compiler.target>
 
         <io.vavr.version>0.10.4</io.vavr.version>
+        <liquibase.version>4.24.0</liquibase.version>
         <lombok.version>1.18.30</lombok.version>
         <org.apache.maven.plugin.antrun.version>3.0.0</org.apache.maven.plugin.antrun.version>
         <org.jacoco.version>0.8.12</org.jacoco.version>
+        <org.hibernate.jpamodelgen.version>6.4.4.Final</org.hibernate.jpamodelgen.version>
         <org.owasp.version>9.1.0</org.owasp.version>
+        <org.postgresql.version>42.7.3</org.postgresql.version>
         <rest-assured.version>5.5.0</rest-assured.version>
         <spring.boot.maven.plugin.version>3.3.1</spring.boot.maven.plugin.version>
         <spring.boot.version>3.3.1</spring.boot.version>
+        <testcontainers.version>1.18.0</testcontainers.version>
     </properties>
 
     <dependencyManagement>
