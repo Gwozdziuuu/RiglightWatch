@@ -29,14 +29,21 @@ jobs:
       - name: Move Extracted Files to Working Directory
         run: mv RiglightWatch-main/* .
 
+      - name: Set up cache for Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-${{ runner.os }}-
+
       - name: Resolve and Download Dependencies for Bifrost-Beacon
         run: mvn dependency:resolve -U -pl bifrost-beacon -am -DskipTests -Ddependency-check.skip=true -f spring/pom.xml
 
       - name: Run Unit Tests for Bifrost-Beacon
-        run: mvn test -pl bifrost-beacon -am -f spring/pom.xml -o
+        run: mvn test -pl bifrost-beacon -am -f spring/pom.xml
 
       - name: Package Bifrost-Beacon Application (without Tests)
-        run: mvn clean package -pl bifrost-beacon -am -DskipTests -f spring/pom.xml -o
+        run: mvn clean package -pl bifrost-beacon -am -DskipTests -f spring/pom.xml
 
       - name: Upload Bifrost-Beacon Build Artifact
         uses: actions/upload-artifact@v3
