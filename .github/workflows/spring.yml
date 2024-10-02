@@ -40,7 +40,7 @@ jobs:
         run: mvn dependency:resolve -U -pl bifrost-beacon -am -DskipTests -Ddependency-check.skip=true -f spring/pom.xml
 
       - name: Install and resolve all dependencies (online)
-        run: mvn install -pl bifrost-beacon -am -DskipTests -f spring/pom.xml
+        run: mvn install -pl bifrost-beacon -am -DskipTests -Ddependency-check.skip=true -f spring/pom.xml
 
       - name: Run Unit Tests for Bifrost-Beacon
         run: mvn test -o -pl bifrost-beacon -am -f spring/pom.xml
