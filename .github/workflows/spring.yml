@@ -62,7 +62,7 @@ jobs:
       - name: Run Tests
         run: mvn test -f spring/pom.xml
       - name: Build application
-        run: mvn clean package -f spring/pom.xml
+        run: mvn clean package -DskipTests -f spring/pom.xml
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
@@ -78,6 +78,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: bifrost-beacon-artifact
+      - name: Rename artifact to service.jar
+        run: mv bifrost-beacon-*.jar service.jar
       - name: Build Docker image
         run: docker build -t bifrostbeacon:latest -f spring/bifrost-beacon/Dockerfile .
       - name: Log in to DockerHub
