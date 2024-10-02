@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: gwozdziuuu/openjdk-21-ubi9-build:latest
+      options: --user root
     steps:
       - name: Download repository as ZIP
         run: curl -L -o repo.zip https://github.com/Gwozdziuuu/RiglightWatch/archive/refs/heads/main.zip
