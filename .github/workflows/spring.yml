@@ -61,3 +61,26 @@ jobs:
           sudo apt-get install -y maven
       - name: Run Tests
         run: mvn test -f spring/pom.xml
+  deploy:
+    runs-on: ubuntu-latest
+    needs: validation  # Ten job uruchomi się po sukcesie joba 'validation'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
+      - name: Build Docker image
+        run: |
+          docker build -t bifrostbeacon:latest .
+      - name: Log in to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      - name: Tag Docker image
+        run: |
+          docker tag bifrostbeacon:latest ${{ secrets.DOCKERHUB_USERNAME }}/bifrostbeacon:latest
+      - name: Push Docker image to DockerHub
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/bifrostbeacon:latest
