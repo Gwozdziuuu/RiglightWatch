@@ -1,0 +1,8 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /bifrost-beacon
+logging:
+  gelf:
+    host: ${LOGGING_GELF_HOST:127.0.0.1}
+    port: ${LOGGING_GELF_PORT:12201}
