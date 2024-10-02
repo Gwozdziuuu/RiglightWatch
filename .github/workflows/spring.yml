@@ -16,7 +16,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: gwozdziuuu/openjdk-21-ubi9-build:latest
+    container:
+      image: gwozdziuuu/openjdk-21-ubi9-build:latest
+      options: --user root
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
