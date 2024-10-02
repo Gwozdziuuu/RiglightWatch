@@ -61,15 +61,25 @@ jobs:
           sudo apt-get install -y maven
       - name: Run Tests
         run: mvn test -f spring/pom.xml
+      - name: Build application
+        run: mvn clean package -f spring/pom.xml
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bifrost-beacon-artifact
+          path: spring/target/bifrost-beacon-*.jar
   deploy:
     runs-on: ubuntu-latest
     needs: run-tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: bifrost-beacon-artifact
       - name: Build Docker image
-        run: |
-          docker build -t bifrostbeacon:latest .
+        run: docker build -t bifrostbeacon:latest -f spring/bifrost-beacon/Dockerfile .
       - name: Log in to DockerHub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       - name: Tag Docker image
