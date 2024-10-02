@@ -16,18 +16,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: gwozdziuuu/openjdk-21-ubi9-build:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up JDK 21
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - name: Install Maven
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y maven
       - name: Validate and download dependencies
         run: mvn validate -f spring/pom.xml
       - name: Run Tests

@@ -1,7 +1,7 @@
 FROM gwozdziuuu/openjdk-21-ubi9-runtime:latest
 
 USER root
-COPY service.jar app.jar
+COPY target/bifrost-beacon-*.jar app.jar
 
 RUN rpm -e --nodeps $(rpm -qa '*rpm*' '*dnf*' '*libsolv*' '*hawkey*' 'yum*') && \
  rm -f /tmp/tls-ca-bundle.pem && \
