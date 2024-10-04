@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'angular/**'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'angular/**'
+  workflow_dispatch:
+
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: heimdalls-vista
+    steps:
+      - name: Checkout Code for Docker Deployment
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image for ${{ env.APP_NAME }}
+        run: docker build -t ${{ env.APP_NAME }}:latest -f angular/${{ env.APP_NAME }}/Dockerfile angular/${{ env.APP_NAME }}/
+
+      - name: Log in to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Tag Docker Image for DockerHub
+        run: docker tag ${{ env.APP_NAME }}:latest ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:latest
+
+      - name: Push Docker Image to DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.APP_NAME }}:latest
