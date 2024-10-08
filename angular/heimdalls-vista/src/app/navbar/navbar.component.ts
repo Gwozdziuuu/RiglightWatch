@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, computed} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
 import {MatAnchor, MatIconButton} from "@angular/material/button";
 import {MatSidenavContainer} from "@angular/material/sidenav";
 import {MatNavList} from "@angular/material/list";
+import {RouteConstants} from "../app.routes";
 
 @Component({
   selector: 'app-navbar',
@@ -23,5 +24,6 @@ import {MatNavList} from "@angular/material/list";
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-
+  monitorsLink: string = RouteConstants.Monitors.toLowerCase();
+  incidentsLink: string = RouteConstants.Incidents.toLowerCase();
 }

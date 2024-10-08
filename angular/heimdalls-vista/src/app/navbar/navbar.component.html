@@ -1,6 +1,6 @@
 <mat-toolbar>
   <span>RiglightWatch</span>
   <div class="spacer"></div>
-  <a mat-button routerLink="monitors">Monitoring</a>
-  <a mat-button routerLink="incidents">Incidents</a>
+  <a mat-button [routerLink]="monitorsLink" i18n="@@navbar.title.monitors">Monitoring</a>
+  <a mat-button [routerLink]="incidentsLink" i18n="@@navbar.title.incidents">Incidents</a>
 </mat-toolbar>
