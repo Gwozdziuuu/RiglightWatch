@@ -3,6 +3,8 @@
   "translations": {
     "monitors": "monitorowanie",
     "incidents": "incydenty",
+    "toggle.light.theme": "Tryb jasny",
+    "toggle.dark.theme": "Tryb ciemny",
     "incidents.works": "Incydenty działają!",
     "navbar.title.monitors": "Monitorowanie",
     "navbar.title.incidents": "Incydenty"

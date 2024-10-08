@@ -3,4 +3,15 @@
   <div class="spacer"></div>
   <a mat-button [routerLink]="monitorsLink" i18n="@@navbar.title.monitors">Monitoring</a>
   <a mat-button [routerLink]="incidentsLink" i18n="@@navbar.title.incidents">Incidents</a>
+  <button
+    mat-icon-button
+    (click)="toggleTheme()"
+    [matTooltip]="tooltipText"
+  >
+    @if (state.darkTheme) {
+      <mat-icon>light_mode</mat-icon>
+    } @else {
+      <mat-icon>dark_mode</mat-icon>
+    }
+  </button>
 </mat-toolbar>
