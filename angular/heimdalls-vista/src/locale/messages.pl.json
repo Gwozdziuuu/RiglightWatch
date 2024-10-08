@@ -1,0 +1,10 @@
+{
+  "locale": "pl",
+  "translations": {
+    "monitors": "monitorowanie",
+    "incidents": "incydenty",
+    "incidents.works": "Incydenty działają!",
+    "navbar.title.monitors": "Monitorowanie",
+    "navbar.title.incidents": "Incydenty"
+  }
+}
