@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {TableColumn, VisibilityChangeEvent} from "./types";
+import {TableColumn, VisibilityChangeEvent} from "./shared/types";
 import {
   MatCell,
   MatCellDef,
