@@ -1,0 +1,36 @@
+<!-- material-table.component.html -->
+<table mat-table [dataSource]="data" class="mat-elevation-z8" *ngIf="data && columns.length">
+  <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+    <th mat-header-cell *matHeaderCellDef> {{ column.header }} </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container [ngSwitch]="column.type">
+        <ng-container *ngSwitchCase="'text'">
+          {{ element[column.key] }}
+        </ng-container>
+        <ng-container *ngSwitchCase="'secret'">
+          <app-mat-table-secret-column
+            [secret]="element[column.key]"
+            [isVisible]="element.isVisible"
+            [id]="element.id"
+            [columnKey]="column.key"
+            (visibilityChanged)="handleVisibilityChange($event)">
+          </app-mat-table-secret-column>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          {{ element[column.key] }}
+        </ng-container>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container *ngIf="showHeader">
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  </ng-container>
+
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="totalItems"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageChangeEvent.emit($event)">
+</mat-paginator>
