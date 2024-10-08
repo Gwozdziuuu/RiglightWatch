@@ -1,4 +1,4 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
@@ -9,7 +9,6 @@ import {RouteConstants} from "../app.routes";
 import {DOCUMENT} from "@angular/common";
 import {MatTooltip} from "@angular/material/tooltip";
 import {getAppState, setAppState} from "../configuration/app-state";
-import {$localize} from "@angular/localize/init";
 
 @Component({
   selector: 'app-navbar',
@@ -31,9 +30,12 @@ import {$localize} from "@angular/localize/init";
 export class NavbarComponent {
   private _document = inject(DOCUMENT);
   state = getAppState();
-
   monitorsLink: string = RouteConstants.Monitors.toLowerCase();
   incidentsLink: string = RouteConstants.Incidents.toLowerCase();
+
+  constructor() {
+    this.toggleTheme(this.state.darkTheme);
+  }
 
   toggleTheme(value = !this.state.darkTheme) {
     this.state.darkTheme = value;
@@ -44,8 +46,7 @@ export class NavbarComponent {
   get tooltipText(): string {
     return this.state.darkTheme
       ? $localize`:@@toggle.light.theme:Toggle light theme`
-      : $localize`:@@toggle.dark.theme:Toggle dark theme`
+      : $localize`:@@toggle.dark.theme:Toggle dark theme`;
   }
 
-  protected readonly $localize = $localize;
 }

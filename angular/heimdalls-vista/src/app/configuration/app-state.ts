@@ -1,7 +1,7 @@
 const KEY = 'MAT_APP_STATE';
 
 export interface AppState {
-  darkTheme: boolean;
+  darkTheme: boolean | false;
 }
 
 export function getAppState(): AppState {
