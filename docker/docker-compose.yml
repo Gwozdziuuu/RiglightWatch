@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: gwozdziuuu/postgres:16.1
+    container_name: rigligh_watch_postgres
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: "keycloak"
+      DB_SCHEMAS_LIST: "bifrost_beacon"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres", "&&", "echo $?" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    configs:
+      - source: database_script
+        target: /docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
+        mode: 0755
+    ports:
+      - "5632:5432"
+    networks:
+      - dev_env
+
+configs:
+  database_script:
+    file: ./scripts/create-multiple-postgresql-databases.sh
+volumes:
+  pg_data:
+
+networks:
+  dev_env:
+    driver: bridge
+    attachable: true
+    name: dev_env
