@@ -1,0 +1,26 @@
+<!-- border-layout.component.html -->
+<div class="border-layout">
+  <div *ngIf="showTop" class="top">
+    <ng-content select="[slot='top']"></ng-content>
+  </div>
+  <div class="middle">
+    <div *ngIf="showLeft" class="left" [class.expanded]="expandLeft">
+      <button *ngIf="showExpandable" class="toggle-button" (click)="toggleLeftExpansion()">
+        <mat-icon>{{ expandLeft ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
+      </button>
+      <ng-content select="[slot='left']"></ng-content>
+    </div>
+    <div *ngIf="showCenter" class="center">
+      <ng-content select="[slot='center']"></ng-content>
+    </div>
+    <div *ngIf="showRight" class="right" [style.flex-basis]="expandRight ? rightWidthMax : rightWidthMin">
+      <button *ngIf="showExpandable" class="toggle-button" (click)="toggleRightExpansion()">
+        <mat-icon>{{ expandRight ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
+      </button>
+      <ng-content select="[slot='right']"></ng-content>
+    </div>
+  </div>
+  <div *ngIf="showBottom" class="bottom">
+    <ng-content select="[slot='bottom']"></ng-content>
+  </div>
+</div>

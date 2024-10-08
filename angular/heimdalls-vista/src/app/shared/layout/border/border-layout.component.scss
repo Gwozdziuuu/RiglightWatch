@@ -1,0 +1,70 @@
+/* border-layout.component.scss */
+.border-layout {
+  display: flex;          /* Ustawia model wyświetlania na flex */
+  flex-direction: column; /* Dzieci komponentu ułożone pionowo */
+  height: 100%;           /* Wysokość kontenera to 100% wysokości elementu nadrzędnego */
+  overflow: hidden;       /* Ukrywa zawartość wystającą poza obszar elementu */
+}
+
+.top, .bottom {
+  min-height: 140px;      /* Minimalna wysokość obu sekcji */
+  padding: 10px;          /* Wewnętrzny margines */
+  background-color: #fff; /* Białe tło */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtelny cień pod sekcją */
+  border-bottom: 1px solid #ccc; /* Linia oddzielająca 'top' od reszty layoutu */
+}
+
+.middle {
+  flex: 1; /* Sekcja zajmuje całą dostępną przestrzeń pomiędzy 'top' a 'bottom' */
+  display: flex; /* Ustawia model wyświetlania na flex */
+  overflow: hidden; /* Zapobiega przewijaniu */
+  margin-top: 1px; /* Margines na górze */
+  margin-bottom: 1px; /* Margines na dole */
+}
+
+.left, .center, .right {
+  overflow-y: auto; /* Umożliwia przewijanie pionowe gdy zawartość przekroczy wysokość elementu */
+  min-width: 200px; /* Minimalna szerokość każdej z sekcji */
+  position: relative; /* Pozycjonowanie względem sekcji dla pseudoelementów i przycisków */
+  transition: flex-basis 0.3s ease; /* Animacja zmiany podstawowej szerokości */
+}
+
+.left, .right {
+  background-color: #fafafa; /* Jasnoszare tło */
+  transition: flex-basis 0.5s ease; /* Animacja zmiany szerokości */
+}
+
+.center {
+  flex: 3; /* Centrum zajmuje trzy razy więcej przestrzeni niż boczne sekcje */
+  padding: 20px; /* Wewnętrzny margines */
+  background-color: #fafafa; /* Jasnoszare tło */
+}
+
+.left.expanded, .right.expanded {
+  flex-basis: 40%; /* Rozszerzona szerokość dla sekcji 'left' i 'right' */
+}
+
+.left::after, .right::before {
+  content: ''; /* Wymagane dla wyświetlania pseudoelementów */
+  position: absolute; /* Absolutne pozycjonowanie względem sekcji 'left' i 'right' */
+  left: 0; /* Ustawienie na lewej krawędzi sekcji */
+  top: 5%; /* Górny margines */
+  bottom: 5%; /* Dolny margines */
+  width: 1px; /* Szerokość separatora */
+  background-color: #ccc; /* Kolor separatora */
+  transition: left 0.3s ease; /* Animacja zmiany położenia */
+}
+
+.right::before {
+  transition: left 0.3s ease 0.1s; /* Opóźniona animacja dla sekcji 'right' */
+}
+
+.toggle-button {
+  position: absolute; /* Absolutne pozycjonowanie przycisku */
+  top: 5%; /* Umieszczenie 5% od góry */
+  background-color: transparent; /* Przezroczyste tło */
+  border: none; /* Brak obramowania */
+  cursor: pointer; /* Kursor wskazuje możliwość kliknięcia */
+  z-index: 10; /* Warstwa na wierzchu */
+  transition: right 0.3s ease; /* Animacja przesunięcia przycisku */
+}
