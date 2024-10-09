@@ -11,6 +11,7 @@
 
     <modules>
         <module>bifrost-beacon</module>
+        <module>toolkit/database</module>
     </modules>
 
     <name>riglightwatchservices</name>
@@ -25,6 +26,7 @@
         <io.vavr.version>0.10.4</io.vavr.version>
         <liquibase.version>4.24.0</liquibase.version>
         <lombok.version>1.18.30</lombok.version>
+        <jakarta.xml.bind.version>4.0.1</jakarta.xml.bind.version>
         <org.apache.maven.plugin.antrun.version>3.0.0</org.apache.maven.plugin.antrun.version>
         <org.jacoco.version>0.8.12</org.jacoco.version>
         <org.hibernate.jpamodelgen.version>6.4.4.Final</org.hibernate.jpamodelgen.version>
@@ -34,6 +36,8 @@
         <spring.boot.maven.plugin.version>3.3.1</spring.boot.maven.plugin.version>
         <spring.boot.version>3.3.1</spring.boot.version>
         <testcontainers.version>1.18.0</testcontainers.version>
+
+        <database.version>1.0.0</database.version>
     </properties>
 
     <dependencyManagement>
