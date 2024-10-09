@@ -7,10 +7,19 @@ spring:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   datasource:
     create:
-      url: ${SPRING_DATASOURCE_CREATE_URL:jdbc:postgresql://127.0.0.1:5432/riglight-watch-db}
-      jdbc-url: ${SPRING_DATASOURCE_CREATE_JDBC_URL:jdbc:postgresql://127.0.0.1:5432/riglight-watch-db}
-      username: ${SPRING_DATASOURCE_CREATE_USERNAME:bifrostbeacon}
+      jdbc-url: ${SPRING_DATASOURCE_CREATE_JDBC_URL:jdbc:postgresql://127.0.0.1:5632/riglightwatch-db}
+      username: ${SPRING_DATASOURCE_CREATE_USERNAME:bifrost_beacon}
       password: ${SPRING_DATASOURCE_CREATE_PASSWORD:postgres}
+    write:
+      jdbc-url: ${SPRING_DATASOURCE_WRITE_JDBC_URL:jdbc:postgresql://127.0.0.1:5632/riglightwatch-db}
+      username: ${SPRING_DATASOURCE_WRITE_USERNAME:bifrost_beacon}
+      password: ${SPRING_DATASOURCE_WRITE_PASSWORD:postgres}
+      max-connections: ${SPRING_DATASOURCE_WRITE_MAX_CONNECTIONS:2}
+    read:
+      jdbc-url: ${SPRING_DATASOURCE_READ_JDBC_URL:jdbc:postgresql://127.0.0.1:5632/riglightwatch-db}
+      username: ${SPRING_DATASOURCE_READ_USERNAME:bifrost_beacon}
+      password: ${SPRING_DATASOURCE_READ_PASSWORD:postgres}
+      max-connections: ${SPRING_DATASOURCE_READ_MAX_CONNECTIONS:2}
   jpa:
     properties:
       hibernate:
